@@ -4,4 +4,4 @@ This document have some information about the system design architecture drawing
 --================================--
 ## Data rates of bus interfaces   ##
 --================================--
-- Int 1.
+- Int 1: Supports max 12 Mbit/s (EFM32GG-RM p.242)
