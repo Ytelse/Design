@@ -1,0 +1,7 @@
+This document have some information about the system design architecture drawing. Document includes the following:
+- Data rates of the Bus interfaces on the card.
+
+--================================--
+## Data rates of bus interfaces   ##
+--================================--
+- Int 1.
