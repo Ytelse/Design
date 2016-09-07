@@ -8,3 +8,5 @@ This document have some information about the system design architecture drawing
 - Int 2: Max ~3.5 Mbit/s
           Peripheral clock / 8 (EFM32GG-RM p.495)
           Peripheral clock is max 28MHz (EFM32GG-RM p.126)
+- Int 5: Between 10 MB/s and 50 MB/s depening on interface and protocol
+- Int 7: Max theoretical 768 MB/s, estimating real capacity at 76.8 MB/s ( depending on CPU load and size of transfers )
