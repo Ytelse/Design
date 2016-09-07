@@ -5,3 +5,6 @@ This document have some information about the system design architecture drawing
 ## Data rates of bus interfaces   ##
 --================================--
 - Int 1: Supports max 12 Mbit/s (EFM32GG-RM p.242)
+- Int 2: Max ~3.5 Mbit/s
+          Peripheral clock / 8 (EFM32GG-RM p.495)
+          Peripheral clock is max 28MHz (EFM32GG-RM p.126)
