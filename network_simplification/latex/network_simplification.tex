@@ -1,0 +1,73 @@
+% FÃ¸rst spesifiserer vi hvilken dokumentklasse vi vil ha og noen 
+% globale opsjoner. Bytt ut 'article' med 'book' hvis du vil ha 
+% med kapitler.
+\documentclass[a4paper, twoside, titlepage, 11pt]{article}
+
+% SÃ¥ sier vi fra om hvilke tilleggspakker vi trenger
+% til dokumentet vÃ¥rt. De som du ikke trenger (se kommentaren) 
+% kan det vÃ¦re en fordel Ã¥ kommentere ut (sett prosenttegn foran),
+% da vil kompilering gÃ¥ raskere.
+
+\usepackage[T1]{fontenc}		% norsk tegnsett (Ã¦Ã¸Ã¥)
+\usepackage[utf8]{inputenc}	% norsk tegnsett
+\usepackage{geometry}		% anbefalt pakke for Ã¥ styre marger.
+
+\usepackage{amsmath,amsfonts,amssymb} % matematikksymboler
+\usepackage{amsthm}                   % for Ã¥ lage teoremer og lignende.
+\usepackage{graphicx}                 % inkludering av grafikk
+\usepackage{subfig}                   % hvis du vil kunne ha flere
+% figurer inni en figur
+\usepackage{listings}                 % Fin for inkludering av kildekode
+\begin{document}	
+	% NÃ¥ vi vil ha noe i topp- og bunnteksten
+	\pagestyle{headings}
+	
+	% Arabisk (vanlige tall) sidenummerering. Starter pÃ¥ side 1 igjen.
+	\pagenumbering{arabic}
+	
+	\section{Neural network simplification}
+	\paragraph{Simplification}
+	The network can be simplified to some degree using some maths.
+	
+	\paragraph{Definition of output neuron}
+	The output neuron is is defined as the following.
+	\begin{equation}
+	O = sign(B(W * S))
+	\end{equation}
+	Where B is the batchnorm function, W is the weight matrix, and S is the synapses (synapses are the output of the previous layer). ''sign'' is the sign function, giving -1 if the number is negative and 1 if it is positive. The batchnorm function is defined as follows.
+	\begin{equation}
+		B(x) = \gamma * \sigma^{-1} * (x - \bar{x}) + \beta
+	\end{equation}
+	\(\gamma\), \(\sigma^{-1}\), \(\bar{x}\) and \(\beta\) is provided with the network. This function will be applied on each element in the \(W * S\) vector. The following equations will show a simplification of this function.
+	\begin{equation}
+		B(x) = \gamma * \sigma^{-1} * (x - \bar{x}) + \beta
+	\end{equation}
+	\begin{equation}
+		B(x) = \gamma * \sigma^{-1} * x - \gamma * \sigma^{-1} * \bar{x} + \beta
+	\end{equation}
+	This can be rewritten as
+	\begin{equation}
+		B(x) = a * x + b
+	\end{equation}
+	Where
+	\begin{equation}
+		a = \gamma * \sigma^{-1}
+	\end{equation}
+	and
+	\begin{equation}
+		b = -\gamma * \sigma^{-1} * \bar{x} + \beta
+	\end{equation}
+	Since we are only interested in the sign of \(B(x)\), it is possible to simplify even more. Multiplying by \(\frac{1}{a}\), will not change the sign of the expression. The multiplication might change the sign of \(a * x\), but will also change the sign of \(b\) by the same amount.
+	\begin{equation}
+		sign(B(x)) = sign(a * x + b) = sign((a * x + b) * \frac{1}{a}) = sign(x + \frac{b}{a})
+	\end{equation}
+	In the case of pre trained neural networks, the values of \(a\) and \(b\) will not change. Then the \(\frac{b}{a}\) can be precomputed, saving time when feeding forward inputs.  The sign operation of a subtractions is really just a comparison. So in this case, it is sufficient to compare the values of \(x\) and \(\frac{b}{a}\) and give an output accordingly.
+	
+	\paragraph{Summary}
+	Each layer in the feed forward network can be simplified by the binary matrix multiplication with the previous output \(W * S\), and then comparing with a single vector to determine if the output should be 1 or -1 (Compare to \(\frac{b}{a}\)).
+	
+\end{document}
+
+% Local Variables:
+% TeX-master: "master"
+% End:
